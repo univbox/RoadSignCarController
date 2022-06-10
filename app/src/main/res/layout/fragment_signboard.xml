@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/main_blue"
+    tools:context=".fragments.SignboardFragment">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/left"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="left"
+                />
+            <Button
+                android:id="@+id/twoway"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="twoway"
+                />
+
+            <Button
+                android:id="@+id/right"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="right"
+                />
+
+            <Button
+                android:id="@+id/X"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="X"
+                />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="@style/SignboardTextView"
+                android:text="밝기"
+                />
+            <Button
+                android:id="@+id/day"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="주간"
+                />
+
+            <Button
+                android:id="@+id/cloudy"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="흐린날"
+                />
+
+            <Button
+                android:id="@+id/night"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="야간"
+                />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="@style/SignboardTextView"
+                android:text="속도"
+                />
+            <Button
+                android:id="@+id/fast"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="빠름"
+                />
+
+            <Button
+                android:id="@+id/mid"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="중간"
+                />
+
+            <Button
+                android:id="@+id/slow"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="느림"
+                />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                android:background="@color/main_blue"
+                android:text=""
+                />
+            <Button
+                android:id="@+id/simul"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="순차점멸"
+                />
+
+            <Button
+                android:id="@+id/contin"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="동시점멸"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                android:background="@color/main_blue"
+                android:text=""
+                />
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</FrameLayout>

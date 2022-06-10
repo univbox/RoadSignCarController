@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/main_blue"
+    tools:context=".fragments.SirenFragment">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/voice_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="전방1대"
+                />
+            <Button
+                android:id="@+id/voice_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="전방2대"
+                />
+
+            <Button
+                android:id="@+id/voice_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="전방3대"
+                />
+
+            <Button
+                android:id="@+id/voice_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="전방4대"
+                />
+
+            <Button
+                android:id="@+id/voice_5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="전방5대"
+                />
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/police_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="경찰"
+                />
+
+            <Button
+                android:id="@+id/fire_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="소방"
+                />
+
+            <Button
+                android:id="@+id/ambulance_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="구급"
+                />
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="@style/SignboardTextView"
+                android:text="Min"
+                />
+
+            <Button
+                android:id="@+id/volume_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="1"
+                />
+
+            <Button
+                android:id="@+id/volume_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="2"
+                />
+
+            <Button
+                android:id="@+id/volume_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="3"
+                />
+
+            <Button
+                android:id="@+id/volume_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="4"
+                />
+            <Button
+                android:id="@+id/volume_5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:backgroundTint="@null"
+                style="@style/SignboardButton"
+                android:text="5"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="@style/SignboardTextView"
+                android:text="Max"
+                />
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</FrameLayout>
