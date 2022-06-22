@@ -43,16 +43,41 @@
                 app:backgroundTint="@null" />
 
 
+            <Button
+                android:id="@+id/speed_button"
+                style="@style/SmallButton"
+                android:text="속도"
+                app:backgroundTint="@null"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                />
+
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/bulletin_button"
+        <RelativeLayout
+            android:id="@+id/bulletin_relative_layout"
             android:layout_height="0dp"
             android:layout_weight="1"
             style="@style/MainButton"
-            app:backgroundTint="@null"
-            android:text="전광판"
-            />
+            >
+            <Button
+                android:id="@+id/bulletin_button"
+                style="@style/MainButtonWithLayout"
+                app:backgroundTint="@null"
+                android:text="전광판"
+                />
+
+            <Button
+                android:id="@+id/bulletin_bright_button"
+                style="@style/SmallButton"
+                android:text="밝기"
+                app:backgroundTint="@null"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                />
+
+
+        </RelativeLayout>
 
         <Button
             android:id="@+id/siren_button"
