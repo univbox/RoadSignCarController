@@ -3,11 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/indicator_button_on.xml" value="0.3715" />
         <entry key="app/src/main/res/drawable/main_button_off.xml" value="0.192" />
         <entry key="app/src/main/res/drawable/main_button_on.xml" value="0.192" />
         <entry key="app/src/main/res/drawable/siren_button_off.xml" value="0.13" />
         <entry key="app/src/main/res/drawable/siren_button_on.xml" value="0.13" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.18411458333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.6826171875" />
         <entry key="app/src/main/res/layout/fragment_bulletin.xml" value="0.48241590214067276" />
         <entry key="app/src/main/res/layout/fragment_signboard.xml" value="0.1623879380603097" />
         <entry key="app/src/main/res/layout/fragment_siren.xml" value="0.20651041666666667" />

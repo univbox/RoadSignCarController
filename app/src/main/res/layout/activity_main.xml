@@ -43,14 +43,32 @@
                 app:backgroundTint="@null" />
 
 
+
             <Button
                 android:id="@+id/speed_button"
                 style="@style/SmallButton"
-                android:text="속도"
-                app:backgroundTint="@null"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                />
+                android:layout_alignParentBottom="true"
+                android:text="속도"
+                app:backgroundTint="@null" />
+
+            <Button
+                android:id="@+id/brighness_button"
+                style="@style/SmallButton"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@id/speed_button"
+                android:text="밝기"
+                app:backgroundTint="@null"/>
+
+            <Button
+                android:id="@+id/simul_contin_button"
+                style="@style/SmallButton"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@id/brighness_button"
+                android:text="순차"
+                android:textStyle="bold"
+                app:backgroundTint="@null" />
+
 
         </RelativeLayout>
 
@@ -60,42 +78,69 @@
             android:layout_weight="1"
             style="@style/MainButton"
             >
+
             <Button
                 android:id="@+id/bulletin_button"
                 style="@style/MainButtonWithLayout"
-                app:backgroundTint="@null"
                 android:text="전광판"
-                />
+                app:backgroundTint="@null" />
 
             <Button
                 android:id="@+id/bulletin_bright_button"
                 style="@style/SmallButton"
-                android:text="밝기"
-                app:backgroundTint="@null"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                />
+                android:layout_alignParentBottom="true"
+                android:text="밝기"
+                app:backgroundTint="@null" />
 
 
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/siren_button"
+        <RelativeLayout
+            android:id="@+id/siren_relative_layout"
             android:layout_height="0dp"
             android:layout_weight="1"
             style="@style/MainButton"
-            app:backgroundTint="@null"
-            android:text="싸이렌"
-            />
+            >
 
-        <Button
-            android:id="@+id/emergency_button"
+            <Button
+                android:id="@+id/siren_button"
+                style="@style/MainButtonWithLayout"
+                android:text="싸이렌"
+                app:backgroundTint="@null" />
+
+            <Button
+                android:id="@+id/siren_volume_button"
+                style="@style/SmallButton"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:text="볼륨"
+                app:backgroundTint="@null" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/emergency_relative_layout"
             android:layout_height="0dp"
             android:layout_weight="1"
             style="@style/MainButton"
-            app:backgroundTint="@null"
-            android:text="비상등"
-            />
+            >
+
+            <Button
+                android:id="@+id/emergency_button"
+                style="@style/MainButtonWithLayout"
+                android:text="비상등"
+                app:backgroundTint="@null" />
+
+            <Button
+                android:id="@+id/emergency_state_button"
+                style="@style/SmallButton"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:text="볼륨"
+                app:backgroundTint="@null" />
+
+        </RelativeLayout>
 
 
 
@@ -105,13 +150,14 @@
         android:id="@+id/main_framelayout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/main_blue"
-        app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
 
     </FrameLayout>
