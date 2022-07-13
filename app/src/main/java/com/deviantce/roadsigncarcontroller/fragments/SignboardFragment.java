@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.deviantce.roadsigncarcontroller.R;
+import com.deviantce.roadsigncarcontroller.impl.ControllerViewListener;
 import com.deviantce.serial_bulletin_library.SerialSignboard;
 import com.deviantce.serial_bulletin_library.SerialSiren;
 import com.deviantce.serial_bulletin_library.SignboardItem;
@@ -36,6 +37,7 @@ public class SignboardFragment extends Fragment {
     Button continButton;
 
     SerialSignboard serialSignboard;
+    ControllerViewListener listener;
 
     public SignboardFragment() {
         // Required empty public constructor
@@ -141,6 +143,10 @@ public class SignboardFragment extends Fragment {
 
         simulButton = view.findViewById(R.id.simul);
         continButton = view.findViewById(R.id.contin);
+    }
+
+    public void setListener(ControllerViewListener listener){
+        this.listener = listener;
     }
 
     public void setButtonStatus(){

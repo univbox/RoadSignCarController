@@ -9,12 +9,13 @@ import android.widget.Button;
 import com.deviantce.roadsigncarcontroller.fragments.BulletinFragment;
 import com.deviantce.roadsigncarcontroller.fragments.SignboardFragment;
 import com.deviantce.roadsigncarcontroller.fragments.SirenFragment;
+import com.deviantce.roadsigncarcontroller.impl.ControllerViewListener;
 import com.deviantce.serial_bulletin_library.SerialLight;
 import com.deviantce.serial_bulletin_library.SerialSignboard;
 import com.deviantce.serial_bulletin_library.SerialSigncarBulletin;
 import com.deviantce.serial_bulletin_library.SerialSiren;
 
-public class MainActivity extends AppCompatActivity implements SerialSiren.SirenSerialListener {
+public class MainActivity extends AppCompatActivity implements SerialSiren.SirenSerialListener, ControllerViewListener {
 
     Button signboardButton;
     Button bulletinButton;
@@ -29,11 +30,19 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
     SerialSignboard serialSignboard;
     SerialSigncarBulletin serialSigncarBulletin;
 
+    Button signboardTypeButton;
+    Button signboardBrighnessButton;
+    Button signboardSpeedButton;
+
+    Button bulletinBrighnessButton;
+
+    Button sirenVolumeButton;
+    Button emergencyStateButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         serVariables();
         setViews();
     }
@@ -47,9 +56,12 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
         serialSigncarBulletin.connect();
 
         signboardFragment = new SignboardFragment(serialSignboard);
+
         bulletinFragment = new BulletinFragment(serialSigncarBulletin);
         sirenFragment = new SirenFragment(serialSiren);
-
+        signboardFragment.setListener(this);
+        bulletinFragment.setListener(this);
+        sirenFragment.setListener(this);
 
     }
 
@@ -60,6 +72,16 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
         bulletinButton = findViewById(R.id.bulletin_button);
         sirenButton = findViewById(R.id.siren_button);
         emergencyButton = findViewById(R.id.emergency_button);
+
+        signboardTypeButton = findViewById(R.id.signboard_simul_contin_button);
+        signboardBrighnessButton = findViewById(R.id.signboard_brighness_button);
+        signboardSpeedButton = findViewById(R.id.signboard_speed_button);
+
+        bulletinBrighnessButton = findViewById(R.id.bulletin_bright_button);
+
+        sirenVolumeButton = findViewById(R.id.siren_volume_button);
+
+        emergencyStateButton = findViewById(R.id.emergency_state_button);
 
         signboardButton.setOnClickListener(v -> {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, signboardFragment).commit();
@@ -95,5 +117,35 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
     @Override
     public void onRunError(Exception e) {
 
+    }
+
+    @Override
+    public void onSirenVolumeButtonClicked(int volume) {
+        sirenVolumeButton.setText(String.valueOf(volume));
+    }
+
+    @Override
+    public void onBulletinBrighnessClicked(int brighness) {
+        bulletinBrighnessButton.setText(String.valueOf(brighness));
+    }
+
+    @Override
+    public void onSignboardBrighnessClicked(int brightness) {
+        signboardBrighnessButton.setText(String.valueOf(brightness));
+    }
+
+    @Override
+    public void onSignboardSpeedClicked(int speed) {
+        signboardSpeedButton.setText(String.valueOf(speed));
+    }
+
+    @Override
+    public void onSignboardTypeClicked(int type) {
+        if(type==1){
+            signboardTypeButton.setText("순차");
+        }
+        else if(type==2){
+            signboardTypeButton.setText("점멸");
+        }
     }
 }

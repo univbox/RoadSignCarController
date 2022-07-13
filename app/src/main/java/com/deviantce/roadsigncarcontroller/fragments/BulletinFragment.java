@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.deviantce.roadsigncarcontroller.R;
+import com.deviantce.roadsigncarcontroller.impl.ControllerViewListener;
 import com.deviantce.serial_bulletin_library.SerialSigncarBulletin;
 
 
@@ -20,6 +21,7 @@ public class BulletinFragment extends Fragment {
     SerialSigncarBulletin serialSigncarBulletin;
 
     ImageView[] imageViews;
+    ControllerViewListener listener;
 
     public BulletinFragment() {
         // Required empty public constructor
@@ -54,6 +56,9 @@ public class BulletinFragment extends Fragment {
         setView(view);
     }
 
+    public void setListener(ControllerViewListener listener){
+        this.listener = listener;
+    }
 
     private void setView(View view) {
         imageViews = new ImageView[28];

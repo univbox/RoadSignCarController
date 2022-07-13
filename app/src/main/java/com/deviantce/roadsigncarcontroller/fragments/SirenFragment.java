@@ -11,13 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.deviantce.roadsigncarcontroller.MainActivity;
 import com.deviantce.roadsigncarcontroller.R;
+import com.deviantce.roadsigncarcontroller.impl.ControllerViewListener;
 import com.deviantce.serial_bulletin_library.SerialItem;
 import com.deviantce.serial_bulletin_library.SerialSiren;
 
 
 public class SirenFragment extends Fragment {
-
     Button voice1_button;
     Button voice2_button;
     Button voice3_button;
@@ -38,6 +39,7 @@ public class SirenFragment extends Fragment {
     Button[] volume_button_groups;
 
     SerialSiren serialSiren;
+    ControllerViewListener listener;
 
     public SirenFragment() {
         // Required empty public constructor
@@ -51,14 +53,12 @@ public class SirenFragment extends Fragment {
 
     public static SirenFragment newInstance() {
         SirenFragment fragment = new SirenFragment();
-
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -191,6 +191,7 @@ public class SirenFragment extends Fragment {
 
     public void setVolumeButtonStatus(){
         int current_volume = serialSiren.getCurrentVolume();
+        this.listener.onSirenVolumeButtonClicked(current_volume);
         volume_button_groups[current_volume-1].setBackgroundResource(R.drawable.siren_button_on);
         for(int i=0;i<volume_button_groups.length;i++){
             if(i!=current_volume-1)
@@ -204,5 +205,9 @@ public class SirenFragment extends Fragment {
             if(button != onbutton)
                 button.setBackgroundResource(R.drawable.siren_button_off);
         }
+    }
+
+    public void setListener(ControllerViewListener listener) {
+        this.listener = listener;
     }
 }

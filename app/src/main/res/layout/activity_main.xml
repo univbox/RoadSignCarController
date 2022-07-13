@@ -43,9 +43,8 @@
                 app:backgroundTint="@null" />
 
 
-
             <Button
-                android:id="@+id/speed_button"
+                android:id="@+id/signboard_speed_button"
                 style="@style/SmallButton"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
@@ -53,18 +52,18 @@
                 app:backgroundTint="@null" />
 
             <Button
-                android:id="@+id/brighness_button"
+                android:id="@+id/signboard_brighness_button"
                 style="@style/SmallButton"
                 android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@id/speed_button"
+                android:layout_toLeftOf="@id/signboard_speed_button"
                 android:text="밝기"
-                app:backgroundTint="@null"/>
+                app:backgroundTint="@null" />
 
             <Button
-                android:id="@+id/simul_contin_button"
+                android:id="@+id/signboard_simul_contin_button"
                 style="@style/SmallButton"
                 android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@id/brighness_button"
+                android:layout_toLeftOf="@id/signboard_brighness_button"
                 android:text="순차"
                 android:textStyle="bold"
                 app:backgroundTint="@null" />
@@ -137,7 +136,7 @@
                 style="@style/SmallButton"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:text="볼륨"
+                android:text="꺼짐"
                 app:backgroundTint="@null" />
 
         </RelativeLayout>
