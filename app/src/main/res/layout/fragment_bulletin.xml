@@ -203,11 +203,11 @@
                     />
 
                 <ImageView
-                    android:id="@+id/image_25"
+                    android:id="@+id/image_27"
                     style="@style/BulletinImageView"
                     />
                 <ImageView
-                    android:id="@+id/image_26"
+                    android:id="@+id/image_28"
                     style="@style/BulletinImageView"
                     />
 
