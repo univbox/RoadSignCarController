@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.deviantce.roadsigncarcontroller.MainActivity;
 import com.deviantce.roadsigncarcontroller.R;
 import com.deviantce.roadsigncarcontroller.impl.ControllerViewListener;
 import com.deviantce.serial_bulletin_library.SerialSignboard;
@@ -154,6 +155,7 @@ public class SignboardFragment extends Fragment {
         setBrightnessStatusButton();
         setSpeedStatusButton();
         setSimulContinButton();
+        resetGotoTimer();
     }
 
     private void setSimulContinButton() {
@@ -161,10 +163,12 @@ public class SignboardFragment extends Fragment {
         if(cur_simul_contin == SignboardItem.SIMUL){
             setButtonOnBackground(simulButton);
             setButtonOffBackground(continButton);
+            listener.onSignboardTypeClicked("순차");
         }
         if(cur_simul_contin == SignboardItem.CONTIN){
             setButtonOffBackground(simulButton);
             setButtonOnBackground(continButton);
+            listener.onSignboardTypeClicked("동시");
         }
     }
 
@@ -174,16 +178,19 @@ public class SignboardFragment extends Fragment {
             setButtonOnBackground(fastButton);
             setButtonOffBackground(midButton);
             setButtonOffBackground(slowButton);
+            listener.onSignboardSpeedClicked("빠름");
         }
         if(cur_speed==SignboardItem.MID){
             setButtonOffBackground(fastButton);
             setButtonOnBackground(midButton);
             setButtonOffBackground(slowButton);
+            listener.onSignboardSpeedClicked("중간");
         }
         if(cur_speed==SignboardItem.SLOW){
             setButtonOffBackground(fastButton);
             setButtonOffBackground(midButton);
             setButtonOnBackground(slowButton);
+            listener.onSignboardSpeedClicked("느림");
         }
     }
 
@@ -193,16 +200,19 @@ public class SignboardFragment extends Fragment {
             setButtonOnBackground(dayButton);
             setButtonOffBackground(cloudyButton);
             setButtonOffBackground(nightButton);
+            listener.onSignboardBrighnessClicked("주간");
         }
         if(cur_brighness==SignboardItem.CLOUDY){
             setButtonOffBackground(dayButton);
             setButtonOnBackground(cloudyButton);
             setButtonOffBackground(nightButton);
+            listener.onSignboardBrighnessClicked("흐린날");
         }
         if(cur_brighness==SignboardItem.NIGHT){
             setButtonOffBackground(dayButton);
             setButtonOffBackground(cloudyButton);
             setButtonOnBackground(nightButton);
+            listener.onSignboardBrighnessClicked("야간");
         }
     }
 
@@ -240,5 +250,13 @@ public class SignboardFragment extends Fragment {
 
     public void setButtonOffBackground(Button offbutton){
         offbutton.setBackgroundResource(R.drawable.siren_button_off);
+    }
+
+    void resetGotoTimer()
+    {
+        if ( getActivity() instanceof MainActivity)
+        {
+            ((MainActivity)getActivity()).resetGotoHomeTimer();
+        }
     }
 }

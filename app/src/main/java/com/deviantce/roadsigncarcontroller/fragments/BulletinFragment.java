@@ -9,8 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.deviantce.roadsigncarcontroller.MainActivity;
 import com.deviantce.roadsigncarcontroller.R;
 import com.deviantce.roadsigncarcontroller.impl.ControllerViewListener;
 import com.deviantce.serial_bulletin_library.SerialSigncarBulletin;
@@ -22,6 +25,7 @@ public class BulletinFragment extends Fragment {
 
     ImageView[] imageViews;
     ControllerViewListener listener;
+    Button[] brighnessButtons;
 
     public BulletinFragment() {
         // Required empty public constructor
@@ -67,8 +71,39 @@ public class BulletinFragment extends Fragment {
             int finalI = i;
             imageViews[i].setOnClickListener(v -> {
                 serialSigncarBulletin.setBulletinNumber(finalI);
+                Toast.makeText(getContext(),"전송 완료",Toast.LENGTH_LONG).show();
+                resetGotoTimer();
             });
         }
+        brighnessButtons = new Button[6];
+        brighnessButtons[1] = view.findViewById(R.id.brightness_1);
+        brighnessButtons[2] = view.findViewById(R.id.brightness_2);
+        brighnessButtons[3] = view.findViewById(R.id.brightness_3);
+        brighnessButtons[4] = view.findViewById(R.id.brightness_4);
+        brighnessButtons[5] = view.findViewById(R.id.brightness_5);
+        for(int i=1;i<6;i++){
+            int index = i;
+            brighnessButtons[i].setOnClickListener(view1 -> {
+                sendBrighness(index);
+            });
+        }
+    }
+
+    private void sendBrighness(int index){
+        setBrighnessButtonStatus(index);
+        listener.onBulletinBrighnessClicked(index);
+    }
+
+    private void setBrighnessButtonStatus(int index) {
+        for(int i=1;i<6;i++){
+            if(index == i){
+                brighnessButtons[i].setBackgroundResource(R.drawable.siren_button_on);
+            }
+            else{
+                brighnessButtons[i].setBackgroundResource(R.drawable.siren_button_off);
+            }
+        }
+        resetGotoTimer();
     }
 
     private ImageView getImageId(View view, int i) {
@@ -138,5 +173,13 @@ public class BulletinFragment extends Fragment {
                 return view.findViewById(R.id.image_5);
         }
 
+    }
+
+    void resetGotoTimer()
+    {
+        if ( getActivity() instanceof MainActivity)
+        {
+            ((MainActivity)getActivity()).resetGotoHomeTimer();
+        }
     }
 }

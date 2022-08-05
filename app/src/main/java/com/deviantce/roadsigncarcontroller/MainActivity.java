@@ -1,12 +1,15 @@
 package com.deviantce.roadsigncarcontroller;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import com.deviantce.roadsigncarcontroller.fragments.BulletinFragment;
+import com.deviantce.roadsigncarcontroller.fragments.CameraPreviewFragment;
 import com.deviantce.roadsigncarcontroller.fragments.SignboardFragment;
 import com.deviantce.roadsigncarcontroller.fragments.SirenFragment;
 import com.deviantce.roadsigncarcontroller.impl.ControllerViewListener;
@@ -14,6 +17,9 @@ import com.deviantce.serial_bulletin_library.SerialLight;
 import com.deviantce.serial_bulletin_library.SerialSignboard;
 import com.deviantce.serial_bulletin_library.SerialSigncarBulletin;
 import com.deviantce.serial_bulletin_library.SerialSiren;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements SerialSiren.SirenSerialListener, ControllerViewListener {
 
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
     SignboardFragment signboardFragment;
     BulletinFragment bulletinFragment;
     SirenFragment sirenFragment;
+    CameraPreviewFragment cameraPreviewFragment;
 
     SerialSiren serialSiren;
     SerialSignboard serialSignboard;
@@ -39,9 +46,12 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
     Button sirenVolumeButton;
     Button emergencyStateButton;
 
+    Timer _tmrGotoMain = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         serVariables();
         setViews();
@@ -59,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
 
         bulletinFragment = new BulletinFragment(serialSigncarBulletin);
         sirenFragment = new SirenFragment(serialSiren);
+
+        cameraPreviewFragment = new CameraPreviewFragment();
         signboardFragment.setListener(this);
         bulletinFragment.setListener(this);
         sirenFragment.setListener(this);
@@ -66,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
     }
 
     private void setViews() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, signboardFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, cameraPreviewFragment).commit();
 
         signboardButton = findViewById(R.id.signboard_button);
         bulletinButton = findViewById(R.id.bulletin_button);
@@ -88,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
             signboardButton.setBackgroundResource(R.drawable.main_button_on);
             bulletinButton.setBackgroundResource(R.drawable.main_button_off);
             sirenButton.setBackgroundResource(R.drawable.main_button_off);
+            resetGotoHomeTimer();
         });
         bulletinButton.setOnClickListener(v -> {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout,bulletinFragment).commit();
@@ -95,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
             signboardButton.setBackgroundResource(R.drawable.main_button_off);
             bulletinButton.setBackgroundResource(R.drawable.main_button_on);
             sirenButton.setBackgroundResource(R.drawable.main_button_off);
+            resetGotoHomeTimer();
         });
         sirenButton.setOnClickListener(v -> {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout,sirenFragment).commit();
@@ -102,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
             signboardButton.setBackgroundResource(R.drawable.main_button_off);
             bulletinButton.setBackgroundResource(R.drawable.main_button_off);
             sirenButton.setBackgroundResource(R.drawable.main_button_on);
+            resetGotoHomeTimer();
         });
 
         emergencyButton.setOnClickListener(v -> {
@@ -129,23 +144,57 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
         bulletinBrighnessButton.setText(String.valueOf(brighness));
     }
 
+
     @Override
-    public void onSignboardBrighnessClicked(int brightness) {
-        signboardBrighnessButton.setText(String.valueOf(brightness));
+    public void onSignboardBrighnessClicked(String brightness) {
+        signboardBrighnessButton.setText(brightness);
     }
 
     @Override
-    public void onSignboardSpeedClicked(int speed) {
-        signboardSpeedButton.setText(String.valueOf(speed));
+    public void onSignboardSpeedClicked(String speed) {
+        signboardSpeedButton.setText(speed);
     }
 
     @Override
-    public void onSignboardTypeClicked(int type) {
-        if(type==1){
-            signboardTypeButton.setText("순차");
+    public void onSignboardTypeClicked(String type) {
+        signboardTypeButton.setText(type);
+    }
+
+
+    public void resetGotoHomeTimer() {
+        /*1. 타이머가 null값이 아니면 예약 된 작업을 삭제하고 타이머를 종료하며 null값으로 변경한다.
+         *  새로운 타이머 객체를 만들어서 지정된 작업이 실행되도록 예약한다.*/
+        if (_tmrGotoMain != null) {
+            _tmrGotoMain.cancel();
+            _tmrGotoMain = null;
         }
-        else if(type==2){
-            signboardTypeButton.setText("점멸");
+
+        _tmrGotoMain = new Timer();
+        _tmrGotoMain.schedule(new TimerTask() {
+            final FragmentManager fragmentManager = getSupportFragmentManager(); //Activity안에 있는 Fragment와 상호 작용 및 관리(Activity에 추가, 교체...)를 위한 클래스
+
+            @Override
+            public void run() {
+//                if (!((MainActivity) context).isFinishing()) {
+                if(_tmrGotoMain == null){
+                    Log.e("MainActivity :","Timer null값");
+                } else {
+                    //fragmentManager.beginTransaction().replace(R.id.beacon_control_contents, _fragments[BoardIndex.RearCamera.value]).commit(); //카메라 프레그먼트에 대한 값을 가져와서 보여준다.
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, cameraPreviewFragment).commit();
+
+                }
+//                }
+
+            }
+        }, 5000);
+        Log.d("Juno", "Reset goto home timer.");
+    }
+
+    void stopHomeTimer(){
+        if (_tmrGotoMain != null) {
+            Log.d("Juno", "stopHomeTimer()");
+            _tmrGotoMain.cancel();
+            _tmrGotoMain = null;
         }
     }
 }

@@ -187,6 +187,7 @@ public class SirenFragment extends Fragment {
         if(siren_status == SerialItem.VOICE_5){
             setButtonOnBackground(voice5_button);
         }
+        resetGotoTimer();
     }
 
     public void setVolumeButtonStatus(){
@@ -197,6 +198,7 @@ public class SirenFragment extends Fragment {
             if(i!=current_volume-1)
                 volume_button_groups[i].setBackgroundResource(R.drawable.siren_button_off);
         }
+        resetGotoTimer();
     }
 
     public void setButtonOnBackground(Button onbutton){
@@ -209,5 +211,13 @@ public class SirenFragment extends Fragment {
 
     public void setListener(ControllerViewListener listener) {
         this.listener = listener;
+    }
+
+    void resetGotoTimer()
+    {
+        if ( getActivity() instanceof MainActivity)
+        {
+            ((MainActivity)getActivity()).resetGotoHomeTimer();
+        }
     }
 }
