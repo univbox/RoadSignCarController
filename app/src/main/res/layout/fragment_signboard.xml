@@ -19,43 +19,51 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <Button
+            <ImageButton
                 android:id="@+id/left"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:backgroundTint="@null"
                 style="@style/SignboardButton"
-                android:text="left"
+                android:src="@drawable/signboard_left"
+                android:scaleType="fitCenter"
+                android:padding="22dp"
                 />
-            <Button
+            <ImageButton
                 android:id="@+id/twoway"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:backgroundTint="@null"
                 style="@style/SignboardButton"
-                android:text="twoway"
+                android:src="@drawable/signboard_twoway"
+                android:scaleType="fitCenter"
+                android:padding="22dp"
                 />
 
-            <Button
+            <ImageButton
                 android:id="@+id/right"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:backgroundTint="@null"
                 style="@style/SignboardButton"
-                android:text="right"
+                android:src="@drawable/signboard_right"
+                android:scaleType="fitCenter"
+                android:padding="22dp"
                 />
 
-            <Button
+            <ImageButton
                 android:id="@+id/X"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:backgroundTint="@null"
                 style="@style/SignboardButton"
-                android:text="X"
+                android:src="@drawable/signboard_x"
+                android:scaleType="fitCenter"
+                android:padding="22dp"
                 />
 
 

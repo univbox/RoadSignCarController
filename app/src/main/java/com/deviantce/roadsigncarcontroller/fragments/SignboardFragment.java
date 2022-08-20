@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.deviantce.roadsigncarcontroller.MainActivity;
 import com.deviantce.roadsigncarcontroller.R;
@@ -21,10 +22,10 @@ import com.deviantce.serial_bulletin_library.SignboardItem;
 
 public class SignboardFragment extends Fragment {
 
-    Button leftButton;
-    Button twowayButton;
-    Button rightButton;
-    Button XButton;
+    ImageButton leftButton;
+    ImageButton twowayButton;
+    ImageButton rightButton;
+    ImageButton XButton;
 
     Button dayButton;
     Button cloudyButton;
@@ -219,34 +220,66 @@ public class SignboardFragment extends Fragment {
     public void setSignboardStatusButton(){
         char current_signboard_status = serialSignboard.getCurrentSignboardStatus();
         if(current_signboard_status== SignboardItem.LEFT){
-            setButtonOnBackground(leftButton);
-            setButtonOffBackground(twowayButton);
-            setButtonOffBackground(rightButton);
-            setButtonOffBackground(XButton);
+            setButtonOnImageBackground(leftButton);
+            setButtonOffImageBackground(twowayButton);
+            setButtonOffImageBackground(rightButton);
+            setButtonOffImageBackground(XButton);
         }
         if(current_signboard_status== SignboardItem.TWOWAY){
-            setButtonOffBackground(leftButton);
-            setButtonOnBackground(twowayButton);
-            setButtonOffBackground(rightButton);
-            setButtonOffBackground(XButton);
+            setButtonOffImageBackground(leftButton);
+            setButtonOnImageBackground(twowayButton);
+            setButtonOffImageBackground(rightButton);
+            setButtonOffImageBackground(XButton);
         }
         if(current_signboard_status== SignboardItem.RIGHT){
-            setButtonOffBackground(leftButton);
-            setButtonOffBackground(twowayButton);
-            setButtonOnBackground(rightButton);
-            setButtonOffBackground(XButton);
+            setButtonOffImageBackground(leftButton);
+            setButtonOffImageBackground(twowayButton);
+            setButtonOnImageBackground(rightButton);
+            setButtonOffImageBackground(XButton);
         }
         if(current_signboard_status== SignboardItem.X){
-            setButtonOffBackground(leftButton);
-            setButtonOffBackground(twowayButton);
-            setButtonOffBackground(rightButton);
-            setButtonOnBackground(XButton);
+            setButtonOffImageBackground(leftButton);
+            setButtonOffImageBackground(twowayButton);
+            setButtonOffImageBackground(rightButton);
+            setButtonOnImageBackground(XButton);
         }
     }
 
     public void setButtonOnBackground(Button onbutton){
         onbutton.setBackgroundResource(R.drawable.siren_button_on);
     }
+
+    public void setButtonOnImageBackground(ImageButton onbutton){
+        if(onbutton==leftButton){
+            onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_left_on));
+        }
+        else if(onbutton==twowayButton){
+            onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_twoway_on));
+        }
+        else if(onbutton==rightButton){
+            onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_right_on));
+        }
+        else if(onbutton==XButton){
+            onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x_on));
+        }
+        //onbutton.setBackgroundResource(R.drawable.siren_button_on);
+    }
+    public void setButtonOffImageBackground(ImageButton onbutton){
+        if(onbutton==leftButton){
+            onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_left));
+        }
+        else if(onbutton==twowayButton){
+            onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_twoway));
+        }
+        else if(onbutton==rightButton){
+            onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_right));
+        }
+        else if(onbutton==XButton){
+            onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x));
+        }
+        //onbutton.setBackgroundResource(R.drawable.siren_button_off);
+    }
+
 
     public void setButtonOffBackground(Button offbutton){
         offbutton.setBackgroundResource(R.drawable.siren_button_off);

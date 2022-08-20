@@ -30,16 +30,31 @@
         >
 
         <RelativeLayout
+            android:id="@+id/signboard_status_rl"
+            style="@style/MainButton"
+            android:text="사인보드"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+
+            app:backgroundTint="@null"
+
+            />
+
+
+        <RelativeLayout
             android:id="@+id/signboard_relative_layout"
             android:layout_height="0dp"
             android:layout_weight="1"
             style="@style/MainButton"
             >
 
+
+
             <Button
                 android:id="@+id/signboard_button"
                 style="@style/MainButtonWithLayout"
                 android:text="사인보드"
+
                 app:backgroundTint="@null" />
 
 
