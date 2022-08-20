@@ -48,4 +48,12 @@ public class SignbarBulletinItem {
     public int getCurrentBrighness() {
         return current_brighness;
     }
+
+    public void offBulletin() {
+        send_data[1] = BULLETIN_OFF;
+    }
+
+    public void onBulletin() {
+        send_data[1] = BULLETIN_ON;
+    }
 }

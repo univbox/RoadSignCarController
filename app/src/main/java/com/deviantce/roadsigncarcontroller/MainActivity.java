@@ -7,12 +7,14 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.deviantce.roadsigncarcontroller.fragments.BulletinFragment;
 import com.deviantce.roadsigncarcontroller.fragments.CameraPreviewFragment;
 import com.deviantce.roadsigncarcontroller.fragments.SignboardFragment;
 import com.deviantce.roadsigncarcontroller.fragments.SirenFragment;
 import com.deviantce.roadsigncarcontroller.impl.ControllerViewListener;
+import com.deviantce.serial_bulletin_library.SerialItem;
 import com.deviantce.serial_bulletin_library.SerialLight;
 import com.deviantce.serial_bulletin_library.SerialSignboard;
 import com.deviantce.serial_bulletin_library.SerialSigncarBulletin;
@@ -22,6 +24,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements SerialSiren.SirenSerialListener, ControllerViewListener {
+
+    final String TAG = getClass().getSimpleName();
 
     Button signboardButton;
     Button bulletinButton;
@@ -45,6 +49,13 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
 
     Button sirenVolumeButton;
     Button emergencyStateButton;
+
+    ImageButton leftImageButton;
+    ImageButton rightImageButton;
+    ImageButton xImageButton;
+    ImageButton twowayImageButton;
+
+    boolean isEmergencyOn = false;
 
     Timer _tmrGotoMain = null;
 
@@ -120,8 +131,23 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
         });
 
         emergencyButton.setOnClickListener(v -> {
-            serialSiren.setEmergencyOn();
+            if(isEmergencyOn){
+                serialSiren.setEmergencyOff();
+                isEmergencyOn = false;
+                emergencyStateButton.setText("꺼짐");
+            }
+            else{
+                serialSiren.setEmergencyOn();
+                isEmergencyOn = true;
+                emergencyStateButton.setText("켜짐");
+            }
+
         });
+
+        leftImageButton = findViewById(R.id.signboard_left);
+        rightImageButton = findViewById(R.id.signboard_right);
+        xImageButton = findViewById(R.id.signboard_x);
+        twowayImageButton = findViewById(R.id.signboard_twoway);
     }
 
     @Override
@@ -142,6 +168,64 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
     @Override
     public void onBulletinBrighnessClicked(int brighness) {
         bulletinBrighnessButton.setText(String.valueOf(brighness));
+    }
+
+    @Override
+    public void onSignboardImageClicked(String type) {
+        leftImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_left));
+        rightImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_right));
+        xImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x));
+        twowayImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_twoway));
+        if(type.equals("left")){
+            leftImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_left_on));
+        }
+        else if(type.equals("right")){
+            rightImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_right_on));
+        }
+        else if(type.equals("twoway")){
+            twowayImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_twoway_on));
+        }
+        else if(type.equals("x")){
+            xImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x_on));
+        }
+    }
+
+    @Override
+    public void onBulletinOffClicked() {
+        bulletinButton.setText("전광판");
+        bulletinBrighnessButton.setText("밝기");
+    }
+
+    @Override
+    public void onSirenOffClicked() {
+        sirenButton.setText("싸이렌");
+        sirenVolumeButton.setText("볼륨");
+    }
+
+    @Override
+    public void onSignboardOffClicked() {
+        signboardBrighnessButton.setText("밝기");
+        signboardSpeedButton.setText("속도");
+        signboardTypeButton.setText("순차");
+    }
+
+    @Override
+    public void onSirenButtonClicked(char siren_status) {
+        if(siren_status == SerialItem.VOICE_1){
+            sirenButton.setText("전방 1대");
+        }
+        else if(siren_status == SerialItem.VOICE_2){
+            sirenButton.setText("전방 2대");
+        }
+        else if(siren_status == SerialItem.VOICE_3){
+            sirenButton.setText("전방 3대");
+        }
+        else if(siren_status == SerialItem.VOICE_4){
+            sirenButton.setText("전방 4대");
+        }
+        else if(siren_status == SerialItem.VOICE_5){
+            sirenButton.setText("전방 5대");
+        }
     }
 
 
@@ -171,30 +255,39 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
 
         _tmrGotoMain = new Timer();
         _tmrGotoMain.schedule(new TimerTask() {
-            final FragmentManager fragmentManager = getSupportFragmentManager(); //Activity안에 있는 Fragment와 상호 작용 및 관리(Activity에 추가, 교체...)를 위한 클래스
 
             @Override
             public void run() {
-//                if (!((MainActivity) context).isFinishing()) {
                 if(_tmrGotoMain == null){
-                    Log.e("MainActivity :","Timer null값");
+                    Log.e(TAG,"Timer null값");
                 } else {
-                    //fragmentManager.beginTransaction().replace(R.id.beacon_control_contents, _fragments[BoardIndex.RearCamera.value]).commit(); //카메라 프레그먼트에 대한 값을 가져와서 보여준다.
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, cameraPreviewFragment).commit();
 
+                    signboardButton.setBackgroundResource(R.drawable.main_button_off);
+                    bulletinButton.setBackgroundResource(R.drawable.main_button_off);
+                    sirenButton.setBackgroundResource(R.drawable.main_button_off);
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, cameraPreviewFragment).commit();
                 }
-//                }
 
             }
         }, 5000);
-        Log.d("Juno", "Reset goto home timer.");
+        Log.d(TAG, "Reset goto home timer.");
     }
 
-    void stopHomeTimer(){
+    public void stopHomeTimer(){
         if (_tmrGotoMain != null) {
-            Log.d("Juno", "stopHomeTimer()");
+            Log.d(TAG, "stopHomeTimer()");
             _tmrGotoMain.cancel();
             _tmrGotoMain = null;
+
+            signboardButton.setBackgroundResource(R.drawable.main_button_off);
+            bulletinButton.setBackgroundResource(R.drawable.main_button_off);
+            sirenButton.setBackgroundResource(R.drawable.main_button_off);
+
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, cameraPreviewFragment).commit();
+
         }
+
     }
 }

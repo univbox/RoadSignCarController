@@ -8,4 +8,13 @@ public interface ControllerViewListener {
     public void onSirenVolumeButtonClicked(int volume);
     public void onBulletinBrighnessClicked(int brighness);
 
+    void onSignboardImageClicked(String type);
+
+    void onBulletinOffClicked();
+
+    void onSirenOffClicked();
+
+    void onSignboardOffClicked();
+
+    void onSirenButtonClicked(char siren_status);
 }

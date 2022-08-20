@@ -27,6 +27,9 @@ public class BulletinFragment extends Fragment {
     ControllerViewListener listener;
     Button[] brighnessButtons;
 
+    Button exitButton;
+    Button offButton;
+
     public BulletinFragment() {
         // Required empty public constructor
     }
@@ -87,6 +90,17 @@ public class BulletinFragment extends Fragment {
                 sendBrighness(index);
             });
         }
+
+        offButton = view.findViewById(R.id.bulletin_off_button);
+        offButton.setOnClickListener( v -> {
+            serialSigncarBulletin.offBulletin();
+            listener.onBulletinOffClicked();
+        });
+
+        exitButton = view.findViewById(R.id.bulletin_exit_button);
+        exitButton.setOnClickListener( v -> {
+            stopHomeTimer();
+        });
     }
 
     private void sendBrighness(int index){
@@ -180,6 +194,13 @@ public class BulletinFragment extends Fragment {
         if ( getActivity() instanceof MainActivity)
         {
             ((MainActivity)getActivity()).resetGotoHomeTimer();
+        }
+    }
+
+    void stopHomeTimer(){
+        if ( getActivity() instanceof MainActivity)
+        {
+            ((MainActivity)getActivity()).stopHomeTimer();
         }
     }
 }

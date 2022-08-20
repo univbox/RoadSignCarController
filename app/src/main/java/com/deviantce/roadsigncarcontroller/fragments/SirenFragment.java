@@ -38,6 +38,11 @@ public class SirenFragment extends Fragment {
     Button[] button_groups;
     Button[] volume_button_groups;
 
+
+    Button exitButton;
+    Button offButton;
+
+
     SerialSiren serialSiren;
     ControllerViewListener listener;
 
@@ -133,6 +138,16 @@ public class SirenFragment extends Fragment {
             serialSiren.setVolume(5);
             setVolumeButtonStatus();
         });
+
+        offButton.setOnClickListener( v -> {
+            serialSiren.offSiren();
+            listener.onSirenOffClicked();
+            stopHomeTimer();
+        });
+
+        exitButton.setOnClickListener( v -> {
+            stopHomeTimer();
+        });
     }
 
     private void setViews(View view) {
@@ -159,45 +174,64 @@ public class SirenFragment extends Fragment {
         volume_button_groups = new Button[]{
                 volume1_button,volume2_button,volume3_button,volume4_button,volume5_button
         };
+
+        exitButton = view.findViewById(R.id.siren_exit_button);
+        offButton = view.findViewById(R.id.siren_off_button);
     }
 
     public void setButtonStatus(){
-        char siren_status = serialSiren.getCurrent_siren_status();
-        if(siren_status == SerialItem.CODE_FIRE){
-            setButtonOnBackground(fire_button);
+        if(isSirenOn()){
+            char siren_status = serialSiren.getCurrent_siren_status();
+            listener.onSirenButtonClicked(siren_status);
+            if(siren_status == SerialItem.CODE_FIRE){
+                setButtonOnBackground(fire_button);
+            }
+            if(siren_status == SerialItem.CODE_POLICE){
+                setButtonOnBackground(police_button);
+            }
+            if(siren_status == SerialItem.CODE_AMBULANCE){
+                setButtonOnBackground(ambulance_button);
+            }
+            if(siren_status == SerialItem.VOICE_1){
+                setButtonOnBackground(voice1_button);
+
+            }
+            if(siren_status == SerialItem.VOICE_2){
+                setButtonOnBackground(voice2_button);
+            }
+            if(siren_status == SerialItem.VOICE_3){
+                setButtonOnBackground(voice3_button);
+            }
+            if(siren_status == SerialItem.VOICE_4){
+                setButtonOnBackground(voice4_button);
+            }
+            if(siren_status == SerialItem.VOICE_5){
+                setButtonOnBackground(voice5_button);
+            }
         }
-        if(siren_status == SerialItem.CODE_POLICE){
-            setButtonOnBackground(police_button);
+
+        else{
+
         }
-        if(siren_status == SerialItem.CODE_AMBULANCE){
-            setButtonOnBackground(ambulance_button);
-        }
-        if(siren_status == SerialItem.VOICE_1){
-            setButtonOnBackground(voice1_button);
-        }
-        if(siren_status == SerialItem.VOICE_2){
-            setButtonOnBackground(voice2_button);
-        }
-        if(siren_status == SerialItem.VOICE_3){
-            setButtonOnBackground(voice3_button);
-        }
-        if(siren_status == SerialItem.VOICE_4){
-            setButtonOnBackground(voice4_button);
-        }
-        if(siren_status == SerialItem.VOICE_5){
-            setButtonOnBackground(voice5_button);
-        }
+
         resetGotoTimer();
     }
 
+    private boolean isSirenOn() {
+        return serialSiren.isOn();
+    }
+
     public void setVolumeButtonStatus(){
-        int current_volume = serialSiren.getCurrentVolume();
-        this.listener.onSirenVolumeButtonClicked(current_volume);
-        volume_button_groups[current_volume-1].setBackgroundResource(R.drawable.siren_button_on);
-        for(int i=0;i<volume_button_groups.length;i++){
-            if(i!=current_volume-1)
-                volume_button_groups[i].setBackgroundResource(R.drawable.siren_button_off);
+        if(isSirenOn()){
+            int current_volume = serialSiren.getCurrentVolume();
+            this.listener.onSirenVolumeButtonClicked(current_volume);
+            volume_button_groups[current_volume-1].setBackgroundResource(R.drawable.siren_button_on);
+            for(int i=0;i<volume_button_groups.length;i++){
+                if(i!=current_volume-1)
+                    volume_button_groups[i].setBackgroundResource(R.drawable.siren_button_off);
+            }
         }
+
         resetGotoTimer();
     }
 
@@ -218,6 +252,13 @@ public class SirenFragment extends Fragment {
         if ( getActivity() instanceof MainActivity)
         {
             ((MainActivity)getActivity()).resetGotoHomeTimer();
+        }
+    }
+
+    void stopHomeTimer(){
+        if ( getActivity() instanceof MainActivity)
+        {
+            ((MainActivity)getActivity()).stopHomeTimer();
         }
     }
 }

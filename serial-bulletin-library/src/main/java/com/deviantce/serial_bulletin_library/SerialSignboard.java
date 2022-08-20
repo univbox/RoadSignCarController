@@ -83,6 +83,7 @@ public class SerialSignboard {
         sendSignboardProtocol(signboardItem);
     }
     private void sendSignboardProtocol(SignboardItem signboardItem) {
+        signboardItem.onSignboard();
         nativeLib.sendCharSiren(this.fd,(char)0xaa,signboardItem.getCh(0),signboardItem.getCh(1),signboardItem.getCh(2),signboardItem.getCh(3));
 
     }
@@ -102,5 +103,14 @@ public class SerialSignboard {
 
     public char getCurrentSimulContin(){
         return signboardItem.getCurrentSimulContin();
+    }
+
+    public void offSignboard() {
+        signboardItem.offSignboard();
+        nativeLib.sendCharSiren(this.fd,(char)0xaa,signboardItem.getCh(0),signboardItem.getCh(1),signboardItem.getCh(2),signboardItem.getCh(3));
+    }
+
+    public boolean isSignboardOn() {
+        return signboardItem.isSignboardOn();
     }
 }

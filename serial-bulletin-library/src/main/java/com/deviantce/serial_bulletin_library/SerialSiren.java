@@ -11,6 +11,9 @@ public class SerialSiren {
     NativeLib nativeLib;
     private SirenSerialListener mListener; // Synchronized by 'this'
 
+    public boolean isOn() {
+        return serialItem.isOn();
+    }
 
 
     public interface SirenSerialListener {
@@ -90,8 +93,20 @@ public class SerialSiren {
         nativeLib.sendCharEmergency(this.fd,(char)0xaa,(char)0x04,(char)0x01);
     }
 
+    public void setEmergencyOff() {
+        nativeLib.sendCharEmergency(this.fd,(char)0xaa,(char)0x04,(char)0x02);
+    }
+
+    public void offSiren() {
+        serialItem.offSiren();
+        nativeLib.sendCharSiren(this.fd,(char)0xaa,serialItem.getCh(0),serialItem.getCh(1),serialItem.getCh(2),serialItem.getCh(3));
+
+    }
+
+
 
     private void sendSirenProtocol(SerialItem serialItem) {
+        serialItem.OnSiren();
         nativeLib.sendCharSiren(this.fd,(char)0xaa,serialItem.getCh(0),serialItem.getCh(1),serialItem.getCh(2),serialItem.getCh(3));
     }
 

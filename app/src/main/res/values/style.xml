@@ -43,9 +43,16 @@
         <item name="android:background">@drawable/siren_button_off</item>
         <item name="android:layout_margin">12dp</item>
         <item name="android:textStyle">bold</item>
-
     </style>
 
+    <style name="OffButton" parent="@style/Widget.AppCompat.Button">
+        <item name="android:textColor">@color/main_blue</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:background">@drawable/siren_button_off</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginBottom">12dp</item>
+    </style>
 
 
     <style name="SignboardTextView" parent="@style/Widget.AppCompat.Button">

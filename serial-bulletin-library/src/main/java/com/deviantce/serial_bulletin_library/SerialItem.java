@@ -116,4 +116,15 @@ public class SerialItem {
         return siren_volume;
     }
 
+    public void offSiren() {
+        send_data[1] = SIREN_OFF;
+    }
+
+    public void OnSiren() {
+        send_data[1] = SIREN_ON;
+    }
+
+    public boolean isOn() {
+        return send_data[1] == SIREN_ON;
+    }
 }

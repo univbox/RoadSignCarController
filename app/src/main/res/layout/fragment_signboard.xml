@@ -28,6 +28,7 @@
                 style="@style/SignboardButton"
                 android:src="@drawable/signboard_left"
                 android:scaleType="fitCenter"
+
                 android:padding="22dp"
                 />
             <ImageButton
@@ -208,13 +209,35 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            <Button
+                android:id="@+id/signboard_off_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="25dp"
+                app:backgroundTint="@null"
+                style="@style/OffButton"
+                android:text="꺼짐"
+                />
+
+            <Button
+                android:id="@+id/signboard_exit_button"
+                style="@style/OffButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="65dp"
+                app:layout_constraintLeft_toRightOf="@id/signboard_off_button"
+                android:text="나가기"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp"
+                app:backgroundTint="@null" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </FrameLayout>

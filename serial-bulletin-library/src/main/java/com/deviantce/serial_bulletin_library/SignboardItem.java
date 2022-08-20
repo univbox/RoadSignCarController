@@ -200,4 +200,16 @@ public class SignboardItem {
     public char getCurrentSimulContin(){
         return current_simulcontin;
     }
+
+    public void offSignboard() {
+        send_data[1] = SIGNBOARD_OFF;
+    }
+
+    public void onSignboard() {
+        send_data[1] = SIGNBOARD_ON;
+    }
+
+    public boolean isSignboardOn() {
+        return send_data[1] == SIGNBOARD_ON;
+    }
 }

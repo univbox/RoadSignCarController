@@ -38,6 +38,9 @@ public class SignboardFragment extends Fragment {
     Button simulButton;
     Button continButton;
 
+    Button exitButton;
+    Button offButton;
+
     SerialSignboard serialSignboard;
     ControllerViewListener listener;
 
@@ -127,6 +130,16 @@ public class SignboardFragment extends Fragment {
             serialSignboard.setContin();
             setButtonStatus();
         });
+
+        exitButton.setOnClickListener( v -> {
+            stopHomeTimer();
+        });
+
+        offButton.setOnClickListener( v -> {
+            serialSignboard.offSignboard();
+            listener.onSignboardOffClicked();
+            stopHomeTimer();
+        });
     }
 
     private void setView(View view) {
@@ -145,6 +158,9 @@ public class SignboardFragment extends Fragment {
 
         simulButton = view.findViewById(R.id.simul);
         continButton = view.findViewById(R.id.contin);
+
+        offButton = view.findViewById(R.id.signboard_off_button);
+        exitButton = view.findViewById(R.id.signboard_exit_button);
     }
 
     public void setListener(ControllerViewListener listener){
@@ -152,11 +168,21 @@ public class SignboardFragment extends Fragment {
     }
 
     public void setButtonStatus(){
-        setSignboardStatusButton();
-        setBrightnessStatusButton();
-        setSpeedStatusButton();
-        setSimulContinButton();
+        if(isSignboardOn()){
+            setSignboardStatusButton();
+            setBrightnessStatusButton();
+            setSpeedStatusButton();
+            setSimulContinButton();
+        }
+        else{
+
+        }
+
         resetGotoTimer();
+    }
+
+    private boolean isSignboardOn() {
+        return serialSignboard.isSignboardOn();
     }
 
     private void setSimulContinButton() {
@@ -252,15 +278,20 @@ public class SignboardFragment extends Fragment {
     public void setButtonOnImageBackground(ImageButton onbutton){
         if(onbutton==leftButton){
             onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_left_on));
+            listener.onSignboardImageClicked("left");
+
         }
         else if(onbutton==twowayButton){
             onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_twoway_on));
+            listener.onSignboardImageClicked("twoway");
         }
         else if(onbutton==rightButton){
             onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_right_on));
+            listener.onSignboardImageClicked("right");
         }
         else if(onbutton==XButton){
             onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x_on));
+            listener.onSignboardImageClicked("x");
         }
         //onbutton.setBackgroundResource(R.drawable.siren_button_on);
     }
@@ -290,6 +321,13 @@ public class SignboardFragment extends Fragment {
         if ( getActivity() instanceof MainActivity)
         {
             ((MainActivity)getActivity()).resetGotoHomeTimer();
+        }
+    }
+
+    void stopHomeTimer(){
+        if ( getActivity() instanceof MainActivity)
+        {
+            ((MainActivity)getActivity()).stopHomeTimer();
         }
     }
 }

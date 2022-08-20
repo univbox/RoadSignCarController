@@ -29,16 +29,76 @@
         android:gravity="center_horizontal"
         >
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/signboard_status_rl"
             style="@style/MainButton"
             android:text="사인보드"
             android:layout_height="0dp"
             android:layout_weight="1"
-
             app:backgroundTint="@null"
+            android:orientation="vertical"
+            >
 
-            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <ImageButton
+                    android:id="@+id/signboard_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:backgroundTint="@null"
+                    android:background="@drawable/siren_button_off"
+                    android:padding="12dp"
+                    android:src="@drawable/signboard_left"
+                    android:scaleType="fitCenter"
+                    />
+                <ImageButton
+                    android:id="@+id/signboard_right"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:backgroundTint="@null"
+                    android:background="@drawable/siren_button_off"
+                    android:padding="12dp"
+                    android:src="@drawable/signboard_right"
+                    android:scaleType="fitCenter"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <ImageButton
+                    android:id="@+id/signboard_x"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:backgroundTint="@null"
+                    android:src="@drawable/signboard_x"
+                    android:background="@drawable/siren_button_off"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    />
+                <ImageButton
+                    android:id="@+id/signboard_twoway"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:backgroundTint="@null"
+                    android:src="@drawable/signboard_twoway"
+                    android:background="@drawable/siren_button_off"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
 
 
         <RelativeLayout
@@ -47,7 +107,6 @@
             android:layout_weight="1"
             style="@style/MainButton"
             >
-
 
 
             <Button

@@ -28,8 +28,15 @@ public class SerialSigncarBulletin {
     }
 
     private void sendBulletinProtocol(SignbarBulletinItem signbarBulletinItem) {
+        signbarBulletinItem.onBulletin();
         nativeLib.sendCharBulletin(this.fd,(char)0xaa,signbarBulletinItem.getCh(0),signbarBulletinItem.getCh(1),signbarBulletinItem.getCh(2));
         nativeLib.sendCharBulletin(this.fd,(char)0xaa,signbarBulletinItem.getCh(0),signbarBulletinItem.getCh(1),(char)signbarBulletinItem.getCurrentBrighness());
+
+    }
+
+    public void offBulletin() {
+        signbarBulletinItem.offBulletin();
+        nativeLib.sendCharBulletin(this.fd,(char)0xaa,signbarBulletinItem.getCh(0),signbarBulletinItem.getCh(1),signbarBulletinItem.getCh(2));
 
     }
 }
