@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.deviantce.roadsigncarcontroller.MainActivity;
@@ -29,6 +30,12 @@ public class BulletinFragment extends Fragment {
 
     Button exitButton;
     Button offButton;
+    Button imgtxtButton;
+
+    LinearLayout imageLL;
+    LinearLayout txtLL;
+    boolean is_img_mode = true;
+
 
     public BulletinFragment() {
         // Required empty public constructor
@@ -68,12 +75,38 @@ public class BulletinFragment extends Fragment {
     }
 
     private void setView(View view) {
+        imageLL = view.findViewById(R.id.image_linearlayout);
+        txtLL = view.findViewById(R.id.text_linearlayout);
+
+        txtLL.setVisibility(View.GONE);
+        imageLL.setVisibility(View.VISIBLE);
+        imgtxtButton = view.findViewById(R.id.bulletin_image_text_button);
+
+        imgtxtButton.setText("이미지");
+        imgtxtButton.setOnClickListener( v -> {
+            if(is_img_mode){
+                imgtxtButton.setText("글자");
+                txtLL.setVisibility(View.VISIBLE);
+                imageLL.setVisibility(View.GONE);
+                is_img_mode = false;
+                resetGotoTimer();
+            }
+            else{
+                imgtxtButton.setText("이미지");
+                txtLL.setVisibility(View.GONE);
+                imageLL.setVisibility(View.VISIBLE);
+                is_img_mode = true;
+                resetGotoTimer();
+            }
+        });
+
         imageViews = new ImageView[28];
         for(int i=1;i<=26;i++){
             imageViews[i] = getImageId(view,i);
             int finalI = i;
             imageViews[i].setOnClickListener(v -> {
                 serialSigncarBulletin.setBulletinNumber(finalI);
+                listener.onBulletinImageClicked(finalI);
                 Toast.makeText(getContext(),"전송 완료",Toast.LENGTH_LONG).show();
                 resetGotoTimer();
             });

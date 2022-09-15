@@ -17,4 +17,6 @@ public interface ControllerViewListener {
     void onSignboardOffClicked();
 
     void onSirenButtonClicked(char siren_status);
+
+    void onBulletinImageClicked(int finalI);
 }

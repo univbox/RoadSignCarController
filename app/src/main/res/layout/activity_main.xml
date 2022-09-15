@@ -31,7 +31,9 @@
 
         <LinearLayout
             android:id="@+id/signboard_status_rl"
+            android:visibility="gone"
             style="@style/MainButton"
+
             android:text="사인보드"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -40,6 +42,9 @@
             >
 
             <LinearLayout
+                android:id="@+id/signboard_status_ll_1"
+                android:visibility="gone"
+
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="horizontal"
@@ -47,6 +52,7 @@
                 <ImageButton
                     android:id="@+id/signboard_left"
                     android:layout_width="0dp"
+                    android:visibility="gone"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     app:backgroundTint="@null"
@@ -58,6 +64,7 @@
                 <ImageButton
                     android:id="@+id/signboard_right"
                     android:layout_width="0dp"
+                    android:visibility="gone"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     app:backgroundTint="@null"
@@ -69,6 +76,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/signboard_status_ll_2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="horizontal"
@@ -76,6 +84,7 @@
                 <ImageButton
                     android:id="@+id/signboard_x"
                     android:layout_width="0dp"
+                    android:visibility="gone"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     app:backgroundTint="@null"
@@ -89,6 +98,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     app:backgroundTint="@null"
                     android:src="@drawable/signboard_twoway"
                     android:background="@drawable/siren_button_off"
@@ -113,7 +123,7 @@
                 android:id="@+id/signboard_button"
                 style="@style/MainButtonWithLayout"
                 android:text="사인보드"
-
+                android:paddingBottom="28dp"
                 app:backgroundTint="@null" />
 
 
@@ -150,12 +160,23 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             style="@style/MainButton"
+            android:visibility="visible"
+            android:background="@color/white"
             >
+
+            <ImageView
+                android:id="@+id/bulletin_img_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:visibility="gone"
+                android:src="@drawable/image_27" />
 
             <Button
                 android:id="@+id/bulletin_button"
                 style="@style/MainButtonWithLayout"
                 android:text="전광판"
+                android:visibility="visible"
                 app:backgroundTint="@null" />
 
             <Button

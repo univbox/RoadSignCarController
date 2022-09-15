@@ -293,7 +293,7 @@ public class SignboardFragment extends Fragment {
             onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x_on));
             listener.onSignboardImageClicked("x");
         }
-        //onbutton.setBackgroundResource(R.drawable.siren_button_on);
+        onbutton.setBackgroundResource(R.drawable.siren_button_on);
     }
     public void setButtonOffImageBackground(ImageButton onbutton){
         if(onbutton==leftButton){
@@ -301,6 +301,7 @@ public class SignboardFragment extends Fragment {
         }
         else if(onbutton==twowayButton){
             onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_twoway));
+
         }
         else if(onbutton==rightButton){
             onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_right));
@@ -308,7 +309,7 @@ public class SignboardFragment extends Fragment {
         else if(onbutton==XButton){
             onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x));
         }
-        //onbutton.setBackgroundResource(R.drawable.siren_button_off);
+        onbutton.setBackgroundResource(R.drawable.siren_button_off);
     }
 
 

@@ -1,13 +1,19 @@
 package com.deviantce.roadsigncarcontroller;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.deviantce.roadsigncarcontroller.fragments.BulletinFragment;
 import com.deviantce.roadsigncarcontroller.fragments.CameraPreviewFragment;
@@ -27,6 +33,9 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
 
     final String TAG = getClass().getSimpleName();
 
+    LinearLayout signboardStatusLL;
+    LinearLayout signboardStatusLL1;
+    LinearLayout signboardStatusLL2;
     Button signboardButton;
     Button bulletinButton;
     Button sirenButton;
@@ -54,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
     ImageButton rightImageButton;
     ImageButton xImageButton;
     ImageButton twowayImageButton;
+
+    RelativeLayout bulletinRL;
+    ImageView bulletinImgView;
 
     boolean isEmergencyOn = false;
 
@@ -90,6 +102,14 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
 
     private void setViews() {
         getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, cameraPreviewFragment).commit();
+        signboardStatusLL = findViewById(R.id.signboard_status_rl);
+        signboardStatusLL1 = findViewById(R.id.signboard_status_ll_1);
+        signboardStatusLL2 = findViewById(R.id.signboard_status_ll_2);
+
+        bulletinRL = findViewById(R.id.bulletin_relative_layout);
+        bulletinImgView = findViewById(R.id.bulletin_img_imageview);
+        bulletinImgView.setVisibility(View.GONE);
+        bulletinRL.setBackgroundColor(getResources().getColor(R.color.white));
 
         signboardButton = findViewById(R.id.signboard_button);
         bulletinButton = findViewById(R.id.bulletin_button);
@@ -120,6 +140,10 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
             bulletinButton.setBackgroundResource(R.drawable.main_button_on);
             sirenButton.setBackgroundResource(R.drawable.main_button_off);
             resetGotoHomeTimer();
+        });
+
+        bulletinImgView.setOnClickListener(v -> {
+            bulletinButton.performClick();
         });
         sirenButton.setOnClickListener(v -> {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout,sirenFragment).commit();
@@ -172,28 +196,73 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
 
     @Override
     public void onSignboardImageClicked(String type) {
+        signboardStatusLL.setVisibility(View.VISIBLE);
         leftImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_left));
         rightImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_right));
         xImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x));
         twowayImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_twoway));
+
+        rightImageButton.setBackgroundResource(R.drawable.siren_button_off);
+        xImageButton.setBackgroundResource(R.drawable.siren_button_off);
+        twowayImageButton.setBackgroundResource(R.drawable.siren_button_off);
+        leftImageButton.setBackgroundResource(R.drawable.siren_button_off);
+
         if(type.equals("left")){
-            leftImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_left_on));
+            signboardStatusLL1.setVisibility(View.VISIBLE);
+            signboardStatusLL2.setVisibility(View.GONE);
+
+            leftImageButton.setVisibility(View.VISIBLE);
+            rightImageButton.setVisibility(View.GONE);
+            twowayImageButton.setVisibility(View.GONE);
+            xImageButton.setVisibility(View.GONE);
+            //leftImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_left_on));
+            //leftImageButton.setBackgroundResource(R.drawable.siren_button_on);
         }
         else if(type.equals("right")){
-            rightImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_right_on));
+            signboardStatusLL1.setVisibility(View.VISIBLE);
+            signboardStatusLL2.setVisibility(View.GONE);
+
+            leftImageButton.setVisibility(View.GONE);
+            rightImageButton.setVisibility(View.VISIBLE);
+            twowayImageButton.setVisibility(View.GONE);
+            xImageButton.setVisibility(View.GONE);
+
+            //rightImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_right_on));
+            //rightImageButton.setBackgroundResource(R.drawable.siren_button_on);
         }
         else if(type.equals("twoway")){
-            twowayImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_twoway_on));
+            signboardStatusLL1.setVisibility(View.GONE);
+            signboardStatusLL2.setVisibility(View.VISIBLE);
+
+            leftImageButton.setVisibility(View.GONE);
+            rightImageButton.setVisibility(View.GONE);
+            twowayImageButton.setVisibility(View.VISIBLE);
+            xImageButton.setVisibility(View.GONE);
+
+            //twowayImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_twoway_on));
+            //twowayImageButton.setBackgroundResource(R.drawable.siren_button_on);
         }
         else if(type.equals("x")){
-            xImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x_on));
+            signboardStatusLL1.setVisibility(View.GONE);
+            signboardStatusLL2.setVisibility(View.VISIBLE);
+
+            leftImageButton.setVisibility(View.GONE);
+            rightImageButton.setVisibility(View.GONE);
+            twowayImageButton.setVisibility(View.GONE);
+            xImageButton.setVisibility(View.VISIBLE);
+
+            //xImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x_on));
+            //xImageButton.setBackgroundResource(R.drawable.siren_button_on);
         }
     }
 
     @Override
     public void onBulletinOffClicked() {
+        bulletinButton.setVisibility(View.VISIBLE);
         bulletinButton.setText("전광판");
         bulletinBrighnessButton.setText("밝기");
+        bulletinRL.setBackgroundColor(getResources().getColor(R.color.white));
+        bulletinImgView.setVisibility(View.GONE);
     }
 
     @Override
@@ -204,9 +273,22 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
 
     @Override
     public void onSignboardOffClicked() {
+        signboardStatusLL.setVisibility(View.GONE);
         signboardBrighnessButton.setText("밝기");
         signboardSpeedButton.setText("속도");
         signboardTypeButton.setText("순차");
+
+        leftImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_left));
+        rightImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_right));
+        xImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x));
+        twowayImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_twoway));
+
+
+        rightImageButton.setBackgroundResource(R.drawable.siren_button_off);
+        xImageButton.setBackgroundResource(R.drawable.siren_button_off);
+        twowayImageButton.setBackgroundResource(R.drawable.siren_button_off);
+        leftImageButton.setBackgroundResource(R.drawable.siren_button_off);
+
     }
 
     @Override
@@ -225,6 +307,107 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
         }
         else if(siren_status == SerialItem.VOICE_5){
             sirenButton.setText("전방 5대");
+        }
+        else if(siren_status == SerialItem.CODE_POLICE){
+            sirenButton.setText("경찰");
+        }
+        else if(siren_status == SerialItem.CODE_FIRE){
+            sirenButton.setText("소방");
+        }
+        else if(siren_status == SerialItem.CODE_AMBULANCE){
+            sirenButton.setText("구급");
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onBulletinImageClicked(int img_id) {
+        bulletinRL.setBackgroundColor(getResources().getColor(R.color.black));
+        bulletinImgView.setVisibility(View.VISIBLE);
+        bulletinButton.setVisibility(View.GONE);
+
+        if(img_id==1){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_1));
+        }
+        else if(img_id==2){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_2));
+        }
+        else if(img_id==3){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_3));
+        }
+        else if(img_id==4){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_4));
+        }
+        else if(img_id==5){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_5));
+        }
+        else if(img_id==6){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_6));
+        }
+        else if(img_id==7){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_7));
+        }
+        else if(img_id==8){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_8));
+        }
+        else if(img_id==9){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_9));
+        }
+
+        else if(img_id==10){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_10));
+        }
+        else if(img_id==11){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_11));
+        }
+        else if(img_id==12){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_12));
+        }
+        else if(img_id==13){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_13));
+        }
+        else if(img_id==14){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_14));
+        }
+        else if(img_id==15){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_15));
+        }
+        else if(img_id==16){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_16));
+        }
+        else if(img_id==17){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_17));
+        }
+        else if(img_id==18){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_18));
+        }
+        else if(img_id==19){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_19));
+        }
+
+        else if(img_id==20){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_20));
+        }
+        else if(img_id==21){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_21));
+        }
+        else if(img_id==22){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_22));
+        }
+        else if(img_id==23){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_23));
+        }
+        else if(img_id==24){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_24));
+        }
+        else if(img_id==25){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_25));
+        }
+        else if(img_id==26){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_26));
+        }
+        else if(img_id==27){
+            bulletinImgView.setImageDrawable(getDrawable(R.drawable.image_27));
         }
     }
 
@@ -284,9 +467,7 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
             bulletinButton.setBackgroundResource(R.drawable.main_button_off);
             sirenButton.setBackgroundResource(R.drawable.main_button_off);
 
-
             getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, cameraPreviewFragment).commit();
-
         }
 
     }
