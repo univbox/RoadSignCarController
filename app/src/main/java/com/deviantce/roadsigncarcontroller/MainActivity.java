@@ -25,6 +25,7 @@ import com.deviantce.serial_bulletin_library.SerialLight;
 import com.deviantce.serial_bulletin_library.SerialSignboard;
 import com.deviantce.serial_bulletin_library.SerialSigncarBulletin;
 import com.deviantce.serial_bulletin_library.SerialSiren;
+import com.deviantce.serial_bulletin_library.SignboardItem;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -168,10 +169,62 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
 
         });
 
+
         leftImageButton = findViewById(R.id.signboard_left);
         rightImageButton = findViewById(R.id.signboard_right);
         xImageButton = findViewById(R.id.signboard_x);
         twowayImageButton = findViewById(R.id.signboard_twoway);
+
+        leftImageButton.setOnClickListener( v -> {
+            char current_signboard_status = signboardFragment.getSignboardStatus();
+            if(current_signboard_status==SignboardItem.LEFT){
+                signboardFragment.offSignboard();
+                onSignboardOffClicked();
+            }
+            else{
+                signboardFragment.onArrowButtonClicked(SignboardItem.LEFT);
+                onSignboardImageClicked("left");
+            }
+
+        });
+        rightImageButton.setOnClickListener(v -> {
+            char current_signboard_status = signboardFragment.getSignboardStatus();
+            if(current_signboard_status==SignboardItem.RIGHT){
+                signboardFragment.offSignboard();
+                onSignboardOffClicked();
+            }
+            else{
+                signboardFragment.onArrowButtonClicked(SignboardItem.RIGHT);
+                onSignboardImageClicked("right");
+            }
+
+
+        });
+        xImageButton.setOnClickListener( v -> {
+            char current_signboard_status = signboardFragment.getSignboardStatus();
+            if(current_signboard_status==SignboardItem.X){
+                signboardFragment.offSignboard();
+                onSignboardOffClicked();
+            }
+            else{
+                signboardFragment.onArrowButtonClicked(SignboardItem.X);
+                onSignboardImageClicked("x");
+            }
+
+        });
+        twowayImageButton.setOnClickListener( v -> {
+            char current_signboard_status = signboardFragment.getSignboardStatus();
+            if(current_signboard_status==SignboardItem.TWOWAY){
+                signboardFragment.offSignboard();
+                onSignboardOffClicked();
+            }
+            else{
+                signboardFragment.onArrowButtonClicked(SignboardItem.TWOWAY);
+                onSignboardImageClicked("twoway");
+            }
+
+        });
+
     }
 
     @Override
@@ -208,51 +261,52 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
         leftImageButton.setBackgroundResource(R.drawable.siren_button_off);
 
         if(type.equals("left")){
-            signboardStatusLL1.setVisibility(View.VISIBLE);
-            signboardStatusLL2.setVisibility(View.GONE);
+//            signboardStatusLL1.setVisibility(View.VISIBLE);
+//            signboardStatusLL2.setVisibility(View.GONE);
 
-            leftImageButton.setVisibility(View.VISIBLE);
-            rightImageButton.setVisibility(View.GONE);
-            twowayImageButton.setVisibility(View.GONE);
-            xImageButton.setVisibility(View.GONE);
-            //leftImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_left_on));
-            //leftImageButton.setBackgroundResource(R.drawable.siren_button_on);
+//            leftImageButton.setVisibility(View.VISIBLE);
+//            rightImageButton.setVisibility(View.GONE);
+//            twowayImageButton.setVisibility(View.GONE);
+//            xImageButton.setVisibility(View.GONE);
+
+            leftImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_left_on));
+            leftImageButton.setBackgroundResource(R.drawable.siren_button_on);
         }
         else if(type.equals("right")){
-            signboardStatusLL1.setVisibility(View.VISIBLE);
-            signboardStatusLL2.setVisibility(View.GONE);
+//            signboardStatusLL1.setVisibility(View.VISIBLE);
+//            signboardStatusLL2.setVisibility(View.GONE);
 
-            leftImageButton.setVisibility(View.GONE);
-            rightImageButton.setVisibility(View.VISIBLE);
-            twowayImageButton.setVisibility(View.GONE);
-            xImageButton.setVisibility(View.GONE);
+//            leftImageButton.setVisibility(View.GONE);
+//            rightImageButton.setVisibility(View.VISIBLE);
+//            twowayImageButton.setVisibility(View.GONE);
+//            xImageButton.setVisibility(View.GONE);
 
-            //rightImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_right_on));
-            //rightImageButton.setBackgroundResource(R.drawable.siren_button_on);
+            rightImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_right_on));
+            rightImageButton.setBackgroundResource(R.drawable.siren_button_on);
         }
         else if(type.equals("twoway")){
-            signboardStatusLL1.setVisibility(View.GONE);
-            signboardStatusLL2.setVisibility(View.VISIBLE);
+//            signboardStatusLL1.setVisibility(View.GONE);
+//            signboardStatusLL2.setVisibility(View.VISIBLE);
 
-            leftImageButton.setVisibility(View.GONE);
-            rightImageButton.setVisibility(View.GONE);
-            twowayImageButton.setVisibility(View.VISIBLE);
-            xImageButton.setVisibility(View.GONE);
+//            leftImageButton.setVisibility(View.GONE);
+//            rightImageButton.setVisibility(View.GONE);
+//            twowayImageButton.setVisibility(View.VISIBLE);
+//            xImageButton.setVisibility(View.GONE);
 
-            //twowayImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_twoway_on));
-            //twowayImageButton.setBackgroundResource(R.drawable.siren_button_on);
+            twowayImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_twoway_on));
+            twowayImageButton.setBackgroundResource(R.drawable.siren_button_on);
         }
         else if(type.equals("x")){
-            signboardStatusLL1.setVisibility(View.GONE);
-            signboardStatusLL2.setVisibility(View.VISIBLE);
+//            signboardStatusLL1.setVisibility(View.GONE);
+//            signboardStatusLL2.setVisibility(View.VISIBLE);
 
-            leftImageButton.setVisibility(View.GONE);
-            rightImageButton.setVisibility(View.GONE);
-            twowayImageButton.setVisibility(View.GONE);
-            xImageButton.setVisibility(View.VISIBLE);
+//            leftImageButton.setVisibility(View.GONE);
+//            rightImageButton.setVisibility(View.GONE);
+//            twowayImageButton.setVisibility(View.GONE);
+//            xImageButton.setVisibility(View.VISIBLE);
 
-            //xImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x_on));
-            //xImageButton.setBackgroundResource(R.drawable.siren_button_on);
+            xImageButton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x_on));
+            xImageButton.setBackgroundResource(R.drawable.siren_button_on);
         }
     }
 
@@ -273,7 +327,7 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
 
     @Override
     public void onSignboardOffClicked() {
-        signboardStatusLL.setVisibility(View.GONE);
+        //signboardStatusLL.setVisibility(View.GONE);
         signboardBrighnessButton.setText("밝기");
         signboardSpeedButton.setText("속도");
         signboardTypeButton.setText("순차");
@@ -288,7 +342,6 @@ public class MainActivity extends AppCompatActivity implements SerialSiren.Siren
         xImageButton.setBackgroundResource(R.drawable.siren_button_off);
         twowayImageButton.setBackgroundResource(R.drawable.siren_button_off);
         leftImageButton.setBackgroundResource(R.drawable.siren_button_off);
-
     }
 
     @Override

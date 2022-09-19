@@ -79,6 +79,29 @@ public class SignboardFragment extends Fragment {
         setButtonStatus();
     }
 
+    public void onArrowButtonClicked(char type){
+        try{
+            if(type == SignboardItem.LEFT){
+                serialSignboard.setLeft();
+            }
+            else if(type == SignboardItem.RIGHT){
+                serialSignboard.setRight();
+            }
+            else if(type == SignboardItem.TWOWAY){
+                serialSignboard.setTwoway();
+            }
+            else if(type == SignboardItem.X){
+                serialSignboard.setX();
+            }
+
+            setButtonStatus();
+        }
+        catch(Exception e){
+
+        }
+
+    }
+
     private void setOnClicks() {
         leftButton.setOnClickListener(v -> {
             serialSignboard.setLeft();
@@ -141,6 +164,12 @@ public class SignboardFragment extends Fragment {
             stopHomeTimer();
         });
     }
+
+    public void offSignboard(){
+        serialSignboard.offSignboard();
+        listener.onSignboardOffClicked();
+    }
+
 
     private void setView(View view) {
         leftButton = view.findViewById(R.id.left);
@@ -269,6 +298,10 @@ public class SignboardFragment extends Fragment {
             setButtonOffImageBackground(rightButton);
             setButtonOnImageBackground(XButton);
         }
+    }
+
+    public char getSignboardStatus(){
+        return serialSignboard.getCurrentSignboardStatus();
     }
 
     public void setButtonOnBackground(Button onbutton){

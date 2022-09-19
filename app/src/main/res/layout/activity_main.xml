@@ -31,7 +31,7 @@
 
         <LinearLayout
             android:id="@+id/signboard_status_rl"
-            android:visibility="gone"
+            android:visibility="visible"
             style="@style/MainButton"
 
             android:text="사인보드"
@@ -43,7 +43,7 @@
 
             <LinearLayout
                 android:id="@+id/signboard_status_ll_1"
-                android:visibility="gone"
+                android:visibility="visible"
 
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -52,7 +52,7 @@
                 <ImageButton
                     android:id="@+id/signboard_left"
                     android:layout_width="0dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     app:backgroundTint="@null"
@@ -61,18 +61,20 @@
                     android:src="@drawable/signboard_left"
                     android:scaleType="fitCenter"
                     />
+
                 <ImageButton
-                    android:id="@+id/signboard_right"
+                    android:id="@+id/signboard_twoway"
                     android:layout_width="0dp"
-                    android:visibility="gone"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:visibility="visible"
                     app:backgroundTint="@null"
+                    android:src="@drawable/signboard_twoway"
                     android:background="@drawable/siren_button_off"
                     android:padding="12dp"
-                    android:src="@drawable/signboard_right"
                     android:scaleType="fitCenter"
                     />
+
             </LinearLayout>
 
             <LinearLayout
@@ -82,9 +84,22 @@
                 android:orientation="horizontal"
                 android:layout_weight="1">
                 <ImageButton
+                    android:id="@+id/signboard_right"
+                    android:layout_width="0dp"
+                    android:visibility="visible"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:backgroundTint="@null"
+                    android:background="@drawable/siren_button_off"
+                    android:padding="12dp"
+                    android:src="@drawable/signboard_right"
+                    android:scaleType="fitCenter"
+                    />
+
+                <ImageButton
                     android:id="@+id/signboard_x"
                     android:layout_width="0dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     app:backgroundTint="@null"
@@ -93,18 +108,7 @@
                     android:padding="12dp"
                     android:scaleType="fitCenter"
                     />
-                <ImageButton
-                    android:id="@+id/signboard_twoway"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    app:backgroundTint="@null"
-                    android:src="@drawable/signboard_twoway"
-                    android:background="@drawable/siren_button_off"
-                    android:padding="12dp"
-                    android:scaleType="fitCenter"
-                    />
+
             </LinearLayout>
 
 
