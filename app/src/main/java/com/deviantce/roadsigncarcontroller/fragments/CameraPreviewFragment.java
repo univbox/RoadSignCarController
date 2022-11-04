@@ -140,14 +140,12 @@ public class CameraPreviewFragment extends Fragment
     private final TextureView.SurfaceTextureListener mSurfaceTextureListener
             = new TextureView.SurfaceTextureListener() {
 
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
-            Log.e("onSurfaceTexture : ",width+", "+height);
+            //Log.e("onSurfaceTexture : ",width+", "+height);
             openCamera(width, height);
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onSurfaceTextureSizeChanged(SurfaceTexture texture, int width, int height) {
             configureTransform(width, height);
@@ -193,14 +191,12 @@ public class CameraPreviewFragment extends Fragment
      *
      * {@link CameraDevice}가 상태를 변경하면 {@link CameraDevice.StateCallback}이 호출됩니다.
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private final CameraDevice.StateCallback mStateCallback = new CameraDevice.StateCallback() {
-
 
         @Override
         public void onOpened(@NonNull CameraDevice cameraDevice) {
             //이 메소드는 카메라가 열릴 때 호출됩니다. 여기에서 카메라 미리보기를 시작합니다.
-            Log.e("mStateCallback : ","onOpened, "+cameraDevice);
+            //Log.e("mStateCallback : ","onOpened, "+cameraDevice);
             mCameraOpenCloseLock.release();
             mCameraDevice = cameraDevice;
             createCameraPreviewSession();
@@ -296,7 +292,6 @@ public class CameraPreviewFragment extends Fragment
     /**
      * A {@link CameraCaptureSession.CaptureCallback}JPEG 캡처와 관련된 이벤트를 처리합니다.
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private CameraCaptureSession.CaptureCallback mCaptureCallback
             = new CameraCaptureSession.CaptureCallback() {
 
@@ -398,7 +393,6 @@ public class CameraPreviewFragment extends Fragment
      * @param aspectRatio       종횡비
      * @return The optimal {@code Size}, or an arbitrary one if none were big enough
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private static Size chooseOptimalSize(Size[] choices, int textureViewWidth,
                                           int textureViewHeight, int maxWidth, int maxHeight, Size aspectRatio) {
 
@@ -472,21 +466,20 @@ public class CameraPreviewFragment extends Fragment
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("카메라동작 확인 : ", "onResume");
+        //  Log.d("카메라동작 확인 : ", "onResume");
         startBackgroundThread();
 
         // 이 뷰의 종횡비를 설정합니다. 뷰의 크기는 비율에 따라 측정됩니다.
         // 화면을 껐다가 다시 켤 때 SurfaceTexture는 이미 사용 가능하며 "onSurfaceTextureAvailable"은 호출되지 않습니다.
         // 이 경우 카메라를 열고 여기에서 미리보기를 시작할 수 있습니다 (그렇지 않으면 SurfaceTextureListener에서 표면이 준비 될 때까지 기다립니다).
         if (mTextureView.isAvailable()) {
-             Log.e("isAvailable : ", "openCamera");
+            //    Log.e("isAvailable : ", "openCamera");
             openCamera(mTextureView.getWidth(), mTextureView.getHeight());
         } else {
-              Log.e("!isAvailable : ", "setSurfaceTextureListener");
+            //   Log.e("!isAvailable : ", "setSurfaceTextureListener");
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
         }
     }
@@ -504,34 +497,33 @@ public class CameraPreviewFragment extends Fragment
      * @param width  카메라 프리뷰에 사용가능한 크기의 너비
      * @param height  카메라 프리뷰에 사용가능한 크기의 너비
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressWarnings("SuspiciousNameCombination")
     private void setUpCameraOutputs(int width, int height) {
 
 
 
-          Log.d("카메라동작 확인 : ", "setUpCameraOutputs");
+        //  Log.d("카메라동작 확인 : ", "setUpCameraOutputs");
         Activity activity = getActivity();
         CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
         try {
-              Log.d("cameraId 확인 : ", "시작");
+            //  Log.d("cameraId 확인 : ", "시작");
 
             for(String cameraid : manager.getCameraIdList()){
-                    Log.d("cameraId 확인 : ", "확인중");
-                    Log.e("cameraId 확인 : ", cameraid);
+                //  Log.d("cameraId 확인 : ", "확인중");
+                //  Log.e("cameraId 확인 : ", cameraid);
                 id = Integer.parseInt(cameraid);
             }
 
 
             for (String cameraId : manager.getCameraIdList()) {
 
-                if(id < 2){
+                if(id <= 2){
                     cameraId = String.valueOf(0);
-                    //     Log.e("카메라아이디 :",cameraId);
+                    //  Log.e("카메라아이디 :",cameraId);
                 }
                 else{
-                    cameraId = String.valueOf(7);
-                    //     Log.e("카메라아이디 :",cameraId);
+                    cameraId = String.valueOf(6);
+                    //  Log.e("카메라아이디 :",cameraId);
                 }
 
 
@@ -660,22 +652,16 @@ public class CameraPreviewFragment extends Fragment
     /**
      * Opens the camera specified by {@link CameraPreviewFragment#mCameraId}.
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void openCamera(int width, int height) {
-        Log.d(TAG,"Open Camera");
+
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            Log.d(TAG,"No permission Camera");
             //   requestCameraPermission();
             return;
         }
-        Log.d(TAG,"Open Camera1");
         setUpCameraOutputs(width, height);
-        Log.d(TAG,"Open Camera2");
         configureTransform(width, height);
-        Log.d(TAG,"Open Camera3");
         Activity activity = getActivity();
-
         CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
         try {
             if (!mCameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
@@ -683,8 +669,7 @@ public class CameraPreviewFragment extends Fragment
             }
             manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
         } catch (CameraAccessException e) {
-            Log.e(TAG,e.getLocalizedMessage());
-            //e.printStackTrace();
+            e.printStackTrace();
         } catch (InterruptedException e) {
             throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
         }
@@ -719,7 +704,7 @@ public class CameraPreviewFragment extends Fragment
      * Starts a background thread and its {@link Handler}.
      */
     private void startBackgroundThread() {
-        Log.d("카메라동작 확인 : ", "startBackgroundThread");
+        //  Log.d("카메라동작 확인 : ", "startBackgroundThread");
         mBackgroundThread = new HandlerThread("CameraBackground");
         mBackgroundThread.start();
         mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
@@ -742,7 +727,6 @@ public class CameraPreviewFragment extends Fragment
     /**
      * Creates a new {@link CameraCaptureSession} for camera preview.
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void createCameraPreviewSession() {
         try {
             SurfaceTexture texture = mTextureView.getSurfaceTexture();
@@ -808,7 +792,6 @@ public class CameraPreviewFragment extends Fragment
      * @param viewWidth  The width of `mTextureView`
      * @param viewHeight The height of `mTextureView`
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void configureTransform(int viewWidth, int viewHeight) {
         Activity activity = getActivity();
         if (null == mTextureView || null == mPreviewSize || null == activity) {
@@ -848,7 +831,6 @@ public class CameraPreviewFragment extends Fragment
     /**
      * Initiate a still image capture.
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void takePicture() {
         lockFocus();
     }
@@ -856,7 +838,6 @@ public class CameraPreviewFragment extends Fragment
     /**
      * Lock the focus as the first step for a still image capture.
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void lockFocus() {
         try {
             // This is how to tell the camera to lock focus.
@@ -875,7 +856,6 @@ public class CameraPreviewFragment extends Fragment
      * Run the precapture sequence for capturing a still image. This method should be called when
      * we get a response in {@link #mCaptureCallback} from {@link #lockFocus()}.
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void runPrecaptureSequence() {
         try {
             // This is how to tell the camera to trigger.
@@ -894,7 +874,6 @@ public class CameraPreviewFragment extends Fragment
      * Capture a still picture. This method should be called when we get a response in
      * {@link #mCaptureCallback} from both {@link #lockFocus()}.
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void captureStillPicture() {
         try {
             final Activity activity = getActivity();
@@ -954,7 +933,6 @@ public class CameraPreviewFragment extends Fragment
      * Unlock the focus. This method should be called when still image capture sequence is
      * finished.
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void unlockFocus() {
         try {
             // Reset the auto-focus trigger
@@ -990,10 +968,8 @@ public class CameraPreviewFragment extends Fragment
 
     private void setAutoFlash(CaptureRequest.Builder requestBuilder) {
         if (mFlashSupported) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
-                        CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-            }
+            requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
+                    CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
         }
     }
 
@@ -1046,7 +1022,6 @@ public class CameraPreviewFragment extends Fragment
      */
     static class CompareSizesByArea implements Comparator<Size> {
 
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public int compare(Size lhs, Size rhs) {
             // We cast here to ensure the multiplications won't overflow

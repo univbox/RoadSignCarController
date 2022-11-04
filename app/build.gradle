@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.deviantce.roadsigncarcontroller"
-        minSdk 19
+        minSdk 21
         targetSdk 31
         versionCode 2
         versionName "1.1"

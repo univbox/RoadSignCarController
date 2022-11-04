@@ -15,7 +15,6 @@ import android.widget.Toast;
 public class IndexActivity extends AppCompatActivity {
     final int REQUEST_CODE = 1000;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,10 +22,16 @@ public class IndexActivity extends AppCompatActivity {
         onCheckPermission();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     private void onCheckPermission() {
-        if ( ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ) {
-            requestPermissions(new String[]{ Manifest.permission.CAMERA,}, REQUEST_CODE);
+        if (
+                (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ) ||
+                (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED ) ||
+                (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED )
+        ){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{ Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE);
+            }
         } else {
             startMainActivity();
         }
