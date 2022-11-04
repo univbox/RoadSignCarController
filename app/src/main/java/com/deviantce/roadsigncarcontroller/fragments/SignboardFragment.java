@@ -79,6 +79,29 @@ public class SignboardFragment extends Fragment {
         setButtonStatus();
     }
 
+    public void onArrowButtonClicked(char type){
+        try{
+            if(type == SignboardItem.LEFT){
+                serialSignboard.setLeft();
+            }
+            else if(type == SignboardItem.RIGHT){
+                serialSignboard.setRight();
+            }
+            else if(type == SignboardItem.TWOWAY){
+                serialSignboard.setTwoway();
+            }
+            else if(type == SignboardItem.X){
+                serialSignboard.setX();
+            }
+
+            setButtonStatus();
+        }
+        catch(Exception e){
+
+        }
+
+    }
+
     private void setOnClicks() {
         leftButton.setOnClickListener(v -> {
             serialSignboard.setLeft();
@@ -141,6 +164,12 @@ public class SignboardFragment extends Fragment {
             stopHomeTimer();
         });
     }
+
+    public void offSignboard(){
+        serialSignboard.offSignboard();
+        listener.onSignboardOffClicked();
+    }
+
 
     private void setView(View view) {
         leftButton = view.findViewById(R.id.left);
@@ -271,6 +300,10 @@ public class SignboardFragment extends Fragment {
         }
     }
 
+    public char getSignboardStatus(){
+        return serialSignboard.getCurrentSignboardStatus();
+    }
+
     public void setButtonOnBackground(Button onbutton){
         onbutton.setBackgroundResource(R.drawable.siren_button_on);
     }
@@ -293,7 +326,7 @@ public class SignboardFragment extends Fragment {
             onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x_on));
             listener.onSignboardImageClicked("x");
         }
-        //onbutton.setBackgroundResource(R.drawable.siren_button_on);
+        onbutton.setBackgroundResource(R.drawable.siren_button_on);
     }
     public void setButtonOffImageBackground(ImageButton onbutton){
         if(onbutton==leftButton){
@@ -301,6 +334,7 @@ public class SignboardFragment extends Fragment {
         }
         else if(onbutton==twowayButton){
             onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_twoway));
+
         }
         else if(onbutton==rightButton){
             onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_right));
@@ -308,7 +342,7 @@ public class SignboardFragment extends Fragment {
         else if(onbutton==XButton){
             onbutton.setImageDrawable(getResources().getDrawable(R.drawable.signboard_x));
         }
-        //onbutton.setBackgroundResource(R.drawable.siren_button_off);
+        onbutton.setBackgroundResource(R.drawable.siren_button_off);
     }
 
 
